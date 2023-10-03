@@ -9,19 +9,14 @@ def test_calculate_total_price():
     assert item2.calculate_total_price() == 100
 
 def test_apply_discount():
-    Item.pay_rate = 0.8
-
-    assert item1.apply_discount() == 160.0
-    assert item2.apply_discount() == 80.0
-    assert item1.price() == 40.0
-    assert item2.price() == 20.0
-
     Item.pay_rate = 0.9
+    item1.apply_discount()
 
-    assert item1.apply_discount() == 180.0
-    assert item2.apply_discount() == 90.0
-    assert item1.price() == 20.0
-    assert item2.price() == 10.0
+    assert item1.price == 18
+    assert item2.price == 10
+
+    item2.apply_discount()
+    assert item2.price == 9
 
 def test_all():
     assert len(Item.all) == 2
