@@ -32,3 +32,10 @@ def test_instantiate_from_csv():
 
     item2.instantiate_from_csv(path)
     assert len(item2.all) == 10
+
+def test_repr_and_str():
+    assert repr(item1) == "Item('Товар 1', 20, 10)"
+    assert repr(item2) == "Item('Товар 2', 10, 10)"
+    assert str(item1) == 'Товар 1'
+    assert str(item2) == 'Товар 2'
+
