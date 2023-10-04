@@ -1,10 +1,10 @@
 import csv
+
 class Item():
     pay_rate = 1.0
     all = []
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
-        Item.all.append(self)
         self.__name= name
         self.price = price
         self.quantity = quantity
@@ -15,8 +15,35 @@ class Item():
     def apply_discount(self):
         self.price = self.price * self.pay_rate
 
+    @property
+    def name(self):
+        return self.__name
 
+    @name.setter
+    def name(self, value):
+        if len(value) > 10:
+            self.__name = value[:10]
+        else:
+            self.__name = value
 
+    @classmethod
+    def instantiate_from_csv(cls, filename):
+        with open(filename, encoding='windows-1251') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                name = row['name']
+                price = row['price']
+                quantity = row['quantity']
+                item = cls(name, price, quantity)
+                cls.all.append(item)
+
+    @staticmethod
+    def string_to_number(string):
+        try:
+            return int(float(string))
+        except ValueError:
+            number = None
+        return number
 
 
 

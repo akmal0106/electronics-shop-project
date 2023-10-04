@@ -1,4 +1,7 @@
 from src.item import Item
+from pathlib import Path
+
+path = Path.cwd().parent.joinpath('src/items.csv')
 
 item1 = Item("Товар 1", 20, 10)
 item2 = Item('Товар 2', 10, 10)
@@ -18,8 +21,14 @@ def test_apply_discount():
     item2.apply_discount()
     assert item2.price == 9
 
-def test_all():
-    assert len(Item.all) == 2
-    item3 = Item('Товар 3', 5, 10)
-    assert len(Item.all) == 3
+def test_string_to_number():
+    assert item1.string_to_number('10') == 10
+    assert item2.string_to_number('10.99') == 10
 
+def test_instantiate_from_csv():
+    item1.instantiate_from_csv(path)
+    assert len(item1.all) == 5
+    assert len(item2.all) == 5
+
+    item2.instantiate_from_csv(path)
+    assert len(item2.all) == 10
