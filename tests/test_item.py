@@ -3,6 +3,7 @@ import pytest
 from src.item import Item
 from pathlib import Path
 from src.phone import Phone
+from src.keyboard import Keyboard
 
 path = Path.cwd().parent.joinpath('src/items.csv')
 
@@ -17,6 +18,10 @@ def item2():
 @pytest.fixture
 def phone1():
     return Phone("iPhone 14", 120_000, 5, 2)
+
+@pytest.fixture
+def keyboard():
+    return Keyboard('Товар 3', 5, 10)
 
 def test_calculate_total_price(item1, item2):
     assert item1.calculate_total_price() == 200
@@ -59,3 +64,13 @@ def tests_phone_repr_and_str(item1, phone1):
 def tests_phone_add(item1,phone1):
     assert phone1 + item1 == 15
     assert phone1 + phone1 == 10
+
+def test_keyboard(keyboard):
+    assert str(keyboard) == 'Товар 3'
+    assert repr(keyboard) == "Keyboard('Товар 3', 5, 10)"
+
+    assert keyboard.language == 'EN'
+    keyboard.change_lang()
+    assert keyboard.language == 'RU'
+    keyboard.change_lang()
+    assert keyboard.language == 'EN'
